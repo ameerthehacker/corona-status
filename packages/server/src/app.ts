@@ -36,6 +36,7 @@ const corsOptions: CorsOptions = {
 // setup request logging middleware
 app.use(morgan('short'));
 app.use(express.json());
+// setup cors policy middleware
 app.use(cors(corsOptions));
 
 const dataRouter = express.Router();
