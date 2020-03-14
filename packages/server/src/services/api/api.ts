@@ -67,4 +67,14 @@ export class CovidAPIService {
 
     return newCases;
   }
+
+  async getTotalRecovered(date: string, country: string): Promise<number> {
+    const res = await this.fetchData();
+
+    const dataPoint = res[country].find(
+      (dataPoint) => dataPoint.date === date
+    ) || { recovered: 0 };
+
+    return dataPoint.recovered;
+  }
 }
