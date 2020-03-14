@@ -9,6 +9,7 @@
     "build-client": "lerna run build --stream --scope=@corona-status/client",
     "dev-client": "lerna run start --stream --scope=@corona-status/client",
     "dev-server": "lerna run dev --stream --scope=@corona-status/server",
+    "test-server": "lerna run test --stream --scope=@corona-status/server",
     "prettify": "prettier --write",
     "lint:staged": "eslint --fix",
     "lint": "eslint --fix packages/** --ext .ts,.tsx",
