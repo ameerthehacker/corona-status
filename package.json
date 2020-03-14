@@ -4,16 +4,18 @@
   "description": "Handy website to track corona status in your country",
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "start-client": "lerna run start --scope=@corona-status/client",
+    "dev-client": "lerna run start --stream --scope=@corona-status/client",
+    "dev-server": "lerna run dev --stream --scope=@corona-status/server",
     "prettify": "prettier --write",
     "lint:staged": "eslint --fix",
-    "lint": "eslint --fix packages/**/**.tsx"
+    "lint": "eslint --fix packages/** --ext .ts,.tsx"
   },
   "repository": "https://github.com/ameerthehacker/corona-status.git",
   "author": "ameerthehacker",
   "license": "MIT",
   "private": false,
   "devDependencies": {
+    "@types/morgan": "^1.9.0",
     "@typescript-eslint/eslint-plugin": "^2.23.0",
     "@typescript-eslint/parser": "^2.23.0",
     "eslint": "^6.8.0",
@@ -36,5 +38,8 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "dependencies": {
+    "morgan": "^1.9.1"
   }
 }
