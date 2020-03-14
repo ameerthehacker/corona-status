@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "Handy website to track corona status in your country",
   "scripts": {
+    "start": "concurrently -k yarn:dev-client yarn:dev-server",
     "bootstrap": "lerna bootstrap",
+    "start-server": "lerna run start --stream --scope=@corona-status/server",
+    "build-client": "lerna run build --stream --scope=@corona-status/client",
     "dev-client": "lerna run start --stream --scope=@corona-status/client",
     "dev-server": "lerna run dev --stream --scope=@corona-status/server",
     "prettify": "prettier --write",
@@ -18,6 +21,7 @@
     "@types/morgan": "^1.9.0",
     "@typescript-eslint/eslint-plugin": "^2.23.0",
     "@typescript-eslint/parser": "^2.23.0",
+    "concurrently": "^5.1.0",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.19.0",
     "husky": "^4.2.3",
