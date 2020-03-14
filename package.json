@@ -11,7 +11,8 @@
     "dev-server": "lerna run dev --stream --scope=@corona-status/server",
     "prettify": "prettier --write",
     "lint:staged": "eslint --fix",
-    "lint": "eslint --fix packages/** --ext .ts,.tsx"
+    "lint": "eslint --fix packages/** --ext .ts,.tsx",
+    "postinstall": "yarn bootstrap"
   },
   "repository": "https://github.com/ameerthehacker/corona-status.git",
   "author": "ameerthehacker",
