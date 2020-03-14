@@ -13,7 +13,8 @@ export interface CovidAPIResponse {
 export class CovidAPIService {
   private lastUpdated: number = 0;
   private lastResponse: CovidAPIResponse | null = null;
-  private cacheValidityTime: number = 5 * 60 * 1000;
+  // cache upto an hour
+  private cacheValidityTime: number = 60 * 60 * 1000;
 
   constructor(
     private httpService: HttpService,
