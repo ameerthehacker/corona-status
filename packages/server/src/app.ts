@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import { CovidAPIService } from './services/api/api';
 import { HttpService } from './services/http/http';
+import cors, { CorsOptions } from 'cors';
 
 const app = express();
 const PORT = process.env.NODE_PORT || 3001;
@@ -10,9 +11,32 @@ const PORT = process.env.NODE_PORT || 3001;
 const httpService = new HttpService('https://pomber.github.io/covid19');
 const covidAPIService = new CovidAPIService(httpService);
 
+const whitelist: string[] = [];
+
+if (process.env.NODE_ENV === 'development') {
+  console.log('express server is running in development mode 🔨');
+
+  whitelist.push('http://localhost:3000');
+}
+
+if (process.env.NODE_ENV === 'production') {
+  console.log('express server is running in production mode 🔥');
+}
+
+const corsOptions: CorsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin || '') !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
+
 // setup request logging middleware
 app.use(morgan('short'));
 app.use(express.json());
+app.use(cors(corsOptions));
 
 const dataRouter = express.Router();
 
