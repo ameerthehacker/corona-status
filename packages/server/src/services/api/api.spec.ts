@@ -151,4 +151,22 @@ describe('API', () => {
 
     expect(apiService.getLatestDate('India')).toBe('2020-12-12');
   });
+
+  it('IsDataAvailableForCountry() should check if country exists in response', async () => {
+    mockResponse(httpService, {
+      India: [
+        {
+          date: '2020-2-2',
+          confirmed: 10,
+          deaths: 2,
+          recovered: 4
+        }
+      ]
+    });
+    const apiService = new CovidAPIService(httpService);
+    await apiService.fetchData();
+
+    expect(apiService.isDataAvailableForCountry('India')).toBeTruthy();
+    expect(apiService.isDataAvailableForCountry('fucking-country')).toBeFalsy();
+  });
 });

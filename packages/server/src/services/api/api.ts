@@ -121,4 +121,13 @@ export class CovidAPIService {
       this.getTotalCases(date, country) - this.getTotalRecovered(date, country)
     );
   }
+
+  isDataAvailableForCountry(country: string): boolean {
+    if (this.lastResponse === null)
+      throw new Error('no data is available to check country existense');
+
+    const res = this.lastResponse;
+
+    return !(res[country] === undefined);
+  }
 }
