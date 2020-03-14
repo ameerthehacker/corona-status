@@ -130,4 +130,11 @@ export class CovidAPIService {
 
     return !(res[country] === undefined);
   }
+
+  getAvailableCountries(): string[] {
+    if (this.lastResponse === null)
+      throw new Error('no data is available to get available countries');
+
+    return Object.keys(this.lastResponse);
+  }
 }

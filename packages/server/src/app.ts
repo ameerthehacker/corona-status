@@ -14,21 +14,39 @@ const covidAPIService = new CovidAPIService(httpService);
 app.use(morgan('short'));
 app.use(express.json());
 
-app.get('/api/data/:country', async (req: Request, res: Response) => {
+const dataRouter = express.Router();
+
+// this route must come first
+dataRouter.get('/countries', async (req: Request, res: Response) => {
+  await covidAPIService.fetchData();
+  const countries = covidAPIService.getAvailableCountries();
+
+  res.json({
+    countries
+  });
+});
+
+dataRouter.get('/:country', async (req: Request, res: Response) => {
   const country = req.params.country;
   const date = req.query.date;
   await covidAPIService.fetchData();
 
-  const response = {
-    totalCases: covidAPIService.getTotalCases(date, country),
-    newCases: covidAPIService.getNewCases(date, country),
-    activeCases: covidAPIService.getActiveCases(date, country),
-    totalDeaths: covidAPIService.getTotalDeaths(date, country),
-    totalRecovered: covidAPIService.getTotalRecovered(date, country)
-  };
+  if (covidAPIService.isDataAvailableForCountry(country)) {
+    const response = {
+      totalCases: covidAPIService.getTotalCases(date, country),
+      newCases: covidAPIService.getNewCases(date, country),
+      activeCases: covidAPIService.getActiveCases(date, country),
+      totalDeaths: covidAPIService.getTotalDeaths(date, country),
+      totalRecovered: covidAPIService.getTotalRecovered(date, country)
+    };
 
-  res.json(response);
+    res.json(response);
+  } else {
+    res.sendStatus(404);
+  }
 });
+
+app.use('/api/data', dataRouter);
 
 app.listen(PORT, () => {
   console.log(`🚀 express server running at port ${PORT}`);
