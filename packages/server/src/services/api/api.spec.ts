@@ -37,6 +37,11 @@ describe('API', () => {
     await apiService.fetchData();
 
     expect(apiService.getNewCases('2020-2-2', 'India')).toBe(2);
+    /** below expectation is to ensure that even if data is not
+     * available for the current date it will give the data based on
+     * last available date for that country
+     **/
+    expect(apiService.getNewCases('2020-2-3', 'India')).toBe(2);
   });
 
   it('getTotalCases() should return total cases', async () => {
@@ -54,6 +59,7 @@ describe('API', () => {
     await apiService.fetchData();
 
     expect(apiService.getTotalCases('2020-2-2', 'India')).toBe(10);
+    expect(apiService.getTotalCases('2020-2-3', 'India')).toBe(10);
   });
 
   it('getTotalRecovered() should return total recovered', async () => {
@@ -71,6 +77,7 @@ describe('API', () => {
     await apiService.fetchData();
 
     expect(apiService.getTotalRecovered('2020-2-2', 'India')).toBe(4);
+    expect(apiService.getTotalRecovered('2020-2-3', 'India')).toBe(4);
   });
 
   it('getTotalDeaths() should return total deaths', async () => {
@@ -88,6 +95,7 @@ describe('API', () => {
     await apiService.fetchData();
 
     expect(apiService.getTotalDeaths('2020-2-2', 'India')).toBe(2);
+    expect(apiService.getTotalDeaths('2020-2-3', 'India')).toBe(2);
   });
 
   it('getActiveCases() should return active cases', async () => {
@@ -105,5 +113,42 @@ describe('API', () => {
     await apiService.fetchData();
 
     expect(apiService.getActiveCases('2020-2-2', 'India')).toBe(6);
+    expect(apiService.getActiveCases('2020-2-3', 'India')).toBe(6);
+  });
+
+  it('getLatestDate() should return the latest date', async () => {
+    mockResponse(httpService, {
+      India: [
+        {
+          date: '2020-2-5',
+          confirmed: 10,
+          deaths: 2,
+          recovered: 4
+        },
+        {
+          date: '2020-1-2',
+          confirmed: 10,
+          deaths: 2,
+          recovered: 4
+        },
+        {
+          date: '2020-12-12',
+          confirmed: 10,
+          deaths: 2,
+          recovered: 4
+        },
+        {
+          date: '2019-12-12',
+          confirmed: 10,
+          deaths: 2,
+          recovered: 4
+        }
+      ]
+    });
+
+    const apiService = new CovidAPIService(httpService);
+    await apiService.fetchData();
+
+    expect(apiService.getLatestDate('India')).toBe('2020-12-12');
   });
 });
