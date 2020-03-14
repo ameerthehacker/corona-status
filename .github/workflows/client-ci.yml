@@ -1,0 +1,35 @@
+name: client-ci
+
+on:
+  push:
+    paths:
+      - '.github/workflows/client-cli.yml'
+      - 'packages/client/**'
+      - 'package.json'
+      - '.eslintrc.json'
+      - '.lerna.json'
+      - 'tsconfig.base.json'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        node_version: [10]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v1
+        with:
+          version: ${{ matrix.node_version }}
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Build
+        run: yarn build-client
