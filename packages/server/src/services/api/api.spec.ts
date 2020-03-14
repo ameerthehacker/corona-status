@@ -69,4 +69,20 @@ describe('API', () => {
 
     expect(await apiService.getTotalRecovered('2020-2-2', 'India')).toBe(4);
   });
+
+  it('getTotalDeaths() should return total deaths', async () => {
+    mockResponse(httpService, {
+      India: [
+        {
+          date: '2020-2-2',
+          confirmed: 10,
+          deaths: 2,
+          recovered: 4
+        }
+      ]
+    });
+    const apiService = new CovidAPIService(httpService);
+
+    expect(await apiService.getTotalDeaths('2020-2-2', 'India')).toBe(2);
+  });
 });
