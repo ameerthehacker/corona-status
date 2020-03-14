@@ -1,15 +1,33 @@
 import express, { Request, Response } from 'express';
 import morgan from 'morgan';
+import { CovidAPIService } from './services/api/api';
+import { HttpService } from './services/http/http';
 
 const app = express();
 const PORT = process.env.NODE_PORT || 3001;
+// we will be fetching the data based on awesome pomber json
+// https://pomber.github.io/covid19/timeseries.json
+const httpService = new HttpService('https://pomber.github.io/covid19');
+const covidAPIService = new CovidAPIService(httpService);
 
 // setup request logging middleware
 app.use(morgan('short'));
 app.use(express.json());
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('hello world!');
+app.get('/api/data/:country', async (req: Request, res: Response) => {
+  const country = req.params.country;
+  const date = req.query.date;
+  await covidAPIService.fetchData();
+
+  const response = {
+    totalCases: covidAPIService.getTotalCases(date, country),
+    newCases: covidAPIService.getNewCases(date, country),
+    activeCases: covidAPIService.getActiveCases(date, country),
+    totalDeaths: covidAPIService.getTotalDeaths(date, country),
+    totalRecovered: covidAPIService.getTotalRecovered(date, country)
+  };
+
+  res.json(response);
 });
 
 app.listen(PORT, () => {

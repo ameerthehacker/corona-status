@@ -34,8 +34,9 @@ describe('API', () => {
       ]
     });
     const apiService = new CovidAPIService(httpService);
+    await apiService.fetchData();
 
-    expect(await apiService.getNewCases('2020-2-2', 'India')).toBe(2);
+    expect(apiService.getNewCases('2020-2-2', 'India')).toBe(2);
   });
 
   it('getTotalCases() should return total cases', async () => {
@@ -50,8 +51,9 @@ describe('API', () => {
       ]
     });
     const apiService = new CovidAPIService(httpService);
+    await apiService.fetchData();
 
-    expect(await apiService.getTotalCases('2020-2-2', 'India')).toBe(10);
+    expect(apiService.getTotalCases('2020-2-2', 'India')).toBe(10);
   });
 
   it('getTotalRecovered() should return total recovered', async () => {
@@ -66,8 +68,9 @@ describe('API', () => {
       ]
     });
     const apiService = new CovidAPIService(httpService);
+    await apiService.fetchData();
 
-    expect(await apiService.getTotalRecovered('2020-2-2', 'India')).toBe(4);
+    expect(apiService.getTotalRecovered('2020-2-2', 'India')).toBe(4);
   });
 
   it('getTotalDeaths() should return total deaths', async () => {
@@ -82,7 +85,25 @@ describe('API', () => {
       ]
     });
     const apiService = new CovidAPIService(httpService);
+    await apiService.fetchData();
 
-    expect(await apiService.getTotalDeaths('2020-2-2', 'India')).toBe(2);
+    expect(apiService.getTotalDeaths('2020-2-2', 'India')).toBe(2);
+  });
+
+  it('getActiveCases() should return active cases', async () => {
+    mockResponse(httpService, {
+      India: [
+        {
+          date: '2020-2-2',
+          confirmed: 10,
+          deaths: 2,
+          recovered: 4
+        }
+      ]
+    });
+    const apiService = new CovidAPIService(httpService);
+    await apiService.fetchData();
+
+    expect(apiService.getActiveCases('2020-2-2', 'India')).toBe(6);
   });
 });

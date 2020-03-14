@@ -17,7 +17,7 @@ export class CovidAPIService {
 
   constructor(
     private httpService: HttpService,
-    private endpoint = 'covid19/timeseries.json'
+    private endpoint = 'timeseries.json'
   ) {}
 
   private get isCacheValid(): boolean {
@@ -25,7 +25,7 @@ export class CovidAPIService {
     return Date.now() - this.lastUpdated <= this.cacheValidityTime;
   }
 
-  private async fetchData(): Promise<CovidAPIResponse> {
+  async fetchData() {
     if (this.lastResponse !== null && this.isCacheValid) {
       return this.lastResponse;
     }
@@ -34,16 +34,17 @@ export class CovidAPIService {
     this.lastResponse = await this.httpService
       .get<CovidAPIResponse>(this.endpoint)
       .then((res) => res.data);
+    this.lastUpdated = Date.now();
 
     if (this.lastResponse === null || this.lastResponse === undefined) {
       throw new Error(`unable to fetch data`);
     }
-
-    return this.lastResponse;
   }
 
-  async getTotalCases(date: string, country: string): Promise<number> {
-    const res = await this.fetchData();
+  getTotalCases(date: string, country: string): number {
+    if (this.lastResponse === null) return 0;
+
+    const res = this.lastResponse;
 
     const dataPoint = res[country].find(
       (dataPoint) => dataPoint.date === date
@@ -52,8 +53,10 @@ export class CovidAPIService {
     return dataPoint.confirmed;
   }
 
-  async getNewCases(date: string, country: string): Promise<number> {
-    const res = await this.fetchData();
+  getNewCases(date: string, country: string): number {
+    if (this.lastResponse === null) return 0;
+
+    const res = this.lastResponse;
     const yesterDay = format(subDays(new Date(date), 1), 'yyyy-M-d');
 
     const dataPoint = res[country].find(
@@ -68,8 +71,10 @@ export class CovidAPIService {
     return newCases;
   }
 
-  async getTotalRecovered(date: string, country: string): Promise<number> {
-    const res = await this.fetchData();
+  getTotalRecovered(date: string, country: string): number {
+    if (this.lastResponse === null) return 0;
+
+    const res = this.lastResponse;
 
     const dataPoint = res[country].find(
       (dataPoint) => dataPoint.date === date
@@ -78,13 +83,23 @@ export class CovidAPIService {
     return dataPoint.recovered;
   }
 
-  async getTotalDeaths(date: string, country: string): Promise<number> {
-    const res = await this.fetchData();
+  getTotalDeaths(date: string, country: string): number {
+    if (this.lastResponse === null) return 0;
+
+    const res = this.lastResponse;
 
     const dataPoint = res[country].find(
       (dataPoint) => dataPoint.date === date
     ) || { deaths: 0 };
 
     return dataPoint.deaths;
+  }
+
+  getActiveCases(date: string, country: string): number {
+    if (this.lastResponse === null) return 0;
+
+    return (
+      this.getTotalCases(date, country) - this.getTotalRecovered(date, country)
+    );
   }
 }
