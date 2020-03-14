@@ -1,4 +1,5 @@
 import { HttpService } from '../http/http';
+import { subDays, format } from 'date-fns';
 
 export interface CovidAPIResponse {
   [country: string]: Array<{
@@ -41,15 +42,29 @@ export class CovidAPIService {
     return this.lastResponse;
   }
 
-  async getNewCases(date: string, country: string): Promise<number> {
+  async getTotalCases(date: string, country: string): Promise<number> {
     const res = await this.fetchData();
 
-    const newCases = res[country].find((dataPoint) => dataPoint.date === date);
+    const dataPoint = res[country].find(
+      (dataPoint) => dataPoint.date === date
+    ) || { confirmed: 0 };
 
-    if (newCases === undefined) {
-      return 0;
-    } else {
-      return newCases.confirmed;
-    }
+    return dataPoint.confirmed;
+  }
+
+  async getNewCases(date: string, country: string): Promise<number> {
+    const res = await this.fetchData();
+    const yesterDay = format(subDays(new Date(date), 1), 'yyyy-M-d');
+
+    const dataPoint = res[country].find(
+      (dataPoint) => dataPoint.date === date
+    ) || { confirmed: 0 };
+    const yesterDayDataPoint = res[country].find(
+      (dataPoint) => dataPoint.date === yesterDay
+    ) || { confirmed: 0 };
+
+    const newCases = dataPoint.confirmed - yesterDayDataPoint.confirmed;
+
+    return newCases;
   }
 }
