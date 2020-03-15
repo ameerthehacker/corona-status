@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import AutoSuggest from 'react-autosuggest';
+import Input from '@chakra-ui/core/dist/Input';
+import Box from '@chakra-ui/core/dist/Box';
 
 export interface CountryInputProps {
   countries: string[];
@@ -20,6 +22,10 @@ export default function CountryInput({ countries }: CountryInputProps) {
         );
   };
 
+  const renderInput = (inputProps: any) => {
+    return <Input {...inputProps} variant="outline" size="lg" />;
+  };
+
   // Autosuggest will call this function every time you need to update suggestions.
   // You already implemented this logic above, so just use it.
   const onSuggestionsFetchRequested = ({ value }: { value: string }) => {
@@ -37,7 +43,7 @@ export default function CountryInput({ countries }: CountryInputProps) {
   const getSuggestionValue = (suggestion: string) => suggestion;
 
   // Use your imagination to render suggestions.
-  const renderSuggestion = (suggestion: string) => <div>{suggestion}</div>;
+  const renderSuggestion = (suggestion: string) => <Box>{suggestion}</Box>;
 
   return (
     <AutoSuggest
@@ -51,6 +57,7 @@ export default function CountryInput({ countries }: CountryInputProps) {
         onChange: (evt, { newValue }) => setInputValue(newValue),
         placeholder: 'Enter your country'
       }}
+      renderInputComponent={renderInput}
     />
   );
 }
