@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import APIServiceContext from '../../contexts/api';
 import { Stats } from '../../services/api/api';
+import CountryInput from '../../components/country-input/country-input';
 
 export default function App() {
   const apiService = useContext(APIServiceContext);
@@ -24,6 +25,7 @@ export default function App() {
           📉
         </span>
       </h1>
+      <CountryInput countries={['India', 'Indiana', 'Australia']} />
       {!stats && <h1>Crunching Data...</h1>}
       {stats && (
         <div
