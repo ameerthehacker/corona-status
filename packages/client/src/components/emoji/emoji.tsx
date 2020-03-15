@@ -7,7 +7,7 @@ export interface EmojiProps {
 
 export default function Emoji({ emoji, ariaLabel }: EmojiProps) {
   return (
-    <span role="img" aria-label={ariaLabel}>
+    <span role="presentation" aria-label={ariaLabel}>
       {emoji}
     </span>
   );

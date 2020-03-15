@@ -1,57 +1,40 @@
 import React, { useContext, useEffect, useState } from 'react';
 import APIServiceContext from '../../contexts/api';
-import { Stats } from '../../services/api/api';
+import Stats, { StatsProps } from '../../components/stats/stats';
 import CountryInput from '../../components/country-input/country-input';
+import Box from '@chakra-ui/core/dist/Box';
+import Text from '@chakra-ui/core/dist/Text';
 import Emoji from '../../components/emoji/emoji';
+import Stack from '@chakra-ui/core/dist/Stack';
 
 export default function App() {
   const apiService = useContext(APIServiceContext);
-  const [stats, setStats] = useState<Stats>();
+  const [stats, setStats] = useState<StatsProps>();
 
   if (apiService === undefined) {
     throw new Error('`APIServiceContext is not provided in App`');
   }
 
   useEffect(() => {
-    apiService.getStats('India').then((stats: Stats) => {
+    apiService.getStats('India').then((stats: StatsProps) => {
       setStats(stats);
     });
   }, [apiService]);
 
   return (
-    <div style={{ textAlign: 'center' }}>
-      <h1>
-        Corona Status{' '}
-        <span role="img" aria-label="chart">
-          📉
-        </span>
-      </h1>
-      <CountryInput countries={['India', 'Indiana', 'Australia']} />
-      {!stats && <h1>Crunching Data...</h1>}
-      {stats && (
-        <div
-          style={{
-            marginTop: '50px'
-          }}
-        >
-          <h1>
-            <Emoji emoji={'🔥'} ariaLabel={'fire'} /> New Cases:{' '}
-            {stats.newCases}
-          </h1>
-          <h1>
-            <Emoji emoji={'🤒'} ariaLabel={'sick'} /> Active Cases:{' '}
-            {stats.totalCases}
-          </h1>
-          <h1>
-            <Emoji emoji={'😢'} ariaLabel={'cry'} /> Total Deaths:{' '}
-            {stats.totalDeaths}
-          </h1>
-          <h1>
-            <Emoji emoji={'💃'} ariaLabel={'dancer'} /> Total Recovered:{' '}
-            {stats.totalRecovered}
-          </h1>
-        </div>
-      )}
-    </div>
+    <Stack spacing={8} textAlign="center">
+      <Box>
+        <Text fontSize="4xl">
+          Corona Status <Emoji emoji="📉" ariaLabel="chart" />
+        </Text>
+      </Box>
+      <Box>
+        <CountryInput countries={['India', 'Indiana', 'Australia']} />
+      </Box>
+      <Box>
+        {!stats && <Text>Crunching Data...</Text>}
+        {stats && <Stats {...stats} />}
+      </Box>
+    </Stack>
   );
 }

@@ -1,13 +1,5 @@
 import format from 'date-fns/format';
-
-export interface Stats {
-  totalCases: number;
-  newCases: number;
-  activeCases: number;
-  totalDeaths: number;
-  totalRecovered: number;
-}
-
+import { StatsProps } from '../../components/stats/stats';
 export class APIService {
   constructor(private baseUrl: string) {}
 
@@ -23,13 +15,13 @@ export class APIService {
     return `${this.baseUrl}/${formattedURL}`;
   }
 
-  async getStats(country: string): Promise<Stats> {
+  async getStats(country: string): Promise<StatsProps> {
     const today = format(Date.now(), 'yyyy-M-d');
 
     const response = await fetch(
       this.getUrl(`${country}?date=${today}`)
     ).then((res) => res.json());
 
-    return response as Stats;
+    return response as StatsProps;
   }
 }
