@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import APIServiceContext from '../../contexts/api';
 import { Stats } from '../../services/api/api';
 import CountryInput from '../../components/country-input/country-input';
+import Emoji from '../../components/emoji/emoji';
 
 export default function App() {
   const apiService = useContext(APIServiceContext);
@@ -34,28 +35,20 @@ export default function App() {
           }}
         >
           <h1>
-            <span role="img" aria-label="fire">
-              🔥
-            </span>{' '}
-            New Cases: {stats.newCases}
+            <Emoji emoji={'🔥'} ariaLabel={'fire'} /> New Cases:{' '}
+            {stats.newCases}
           </h1>
           <h1>
-            <span role="img" aria-label="sick">
-              🤒
-            </span>{' '}
-            Active Cases: {stats.totalCases}
+            <Emoji emoji={'🤒'} ariaLabel={'sick'} /> Active Cases:{' '}
+            {stats.totalCases}
           </h1>
           <h1>
-            <span role="img" aria-label="sick">
-              😢
-            </span>{' '}
-            Total Deaths: {stats.totalDeaths}
+            <Emoji emoji={'😢'} ariaLabel={'cry'} /> Total Deaths:{' '}
+            {stats.totalDeaths}
           </h1>
           <h1>
-            <span role="img" aria-label="dancer">
-              💃
-            </span>{' '}
-            Total Recovered: {stats.totalRecovered}
+            <Emoji emoji={'💃'} ariaLabel={'dancer'} /> Total Recovered:{' '}
+            {stats.totalRecovered}
           </h1>
         </div>
       )}
