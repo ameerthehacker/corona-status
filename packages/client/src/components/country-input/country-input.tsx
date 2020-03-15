@@ -23,7 +23,9 @@ export default function CountryInput({ countries }: CountryInputProps) {
   };
 
   const renderInput = (inputProps: any) => {
-    return <Input {...inputProps} variant="outline" size="lg" />;
+    return (
+      <Input borderRadius={0} {...inputProps} variant="outline" size="lg" />
+    );
   };
 
   // Autosuggest will call this function every time you need to update suggestions.
