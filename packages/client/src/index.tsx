@@ -4,6 +4,8 @@ import * as serviceWorker from './serviceWorker';
 import App from './modules/app/app';
 import APIServiceContext from './contexts/api';
 import { APIService } from './services/api/api';
+import ThemeProvider from '@chakra-ui/core/dist/ThemeProvider';
+import CSSReset from '@chakra-ui/core/dist/CSSReset';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -15,7 +17,10 @@ const httpService = new APIService(API_URL);
 
 const el = (
   <APIServiceContext.Provider value={httpService}>
-    <App />
+    <ThemeProvider>
+      <CSSReset />
+      <App />
+    </ThemeProvider>
   </APIServiceContext.Provider>
 );
 
