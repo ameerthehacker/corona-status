@@ -7,6 +7,8 @@ import Text from '@chakra-ui/core/dist/Text';
 import Stack from '@chakra-ui/core/dist/Stack';
 import useColorScheme from '../../components/use-color-scheme/use-color-sheme';
 import Navbar from '../../components/navbar/navbar';
+import Loader from '../../components/loader/loader';
+import Emoji from '../../components/emoji/emoji';
 
 export default function App() {
   const apiService = useContext(APIServiceContext);
@@ -36,8 +38,17 @@ export default function App() {
         <Box mt={60} p={4}>
           <CountryInput countries={['India', 'Indiana', 'Australia']} />
         </Box>
-        <Box>
-          {!stats && <Text>Crunching Data...</Text>}
+        <Box textAlign="center">
+          {!stats && (
+            <Loader
+              message={
+                <Text size="md">
+                  <Emoji emoji="🚧" ariaLabel="barigade" />
+                  Crunching data <Emoji emoji="🚧" ariaLabel="barigade" />
+                </Text>
+              }
+            />
+          )}
           {stats && <Stats {...stats} />}
         </Box>
       </Stack>
