@@ -18,7 +18,7 @@ export default function Navbar() {
       bg={bgColor}
       direction="row"
       alignItems="center"
-      justifyContent="space-between"
+      justifyContent="flex-end"
       pos="absolute"
       top={0}
       height={60}
@@ -26,7 +26,12 @@ export default function Navbar() {
       px={4}
       borderBottomWidth="1px"
     >
-      <Stack justifyContent="center" width="100%" direction="row">
+      <Stack
+        position="absolute"
+        justifyContent="center"
+        width="100%"
+        direction="row"
+      >
         <Logo fill={color} height="30px" />
         <Text ml={1} fontStyle="light" fontWeight="light" fontSize="2xl">
           Corona Status
