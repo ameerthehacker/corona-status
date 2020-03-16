@@ -23,18 +23,15 @@ export default function App() {
     apiService.getStats('India').then((stats: StatsProps) => {
       setStats(stats);
     });
-  }, [apiService]);
+
+    // update the body bgColor based on current color mode
+    document.body.style.backgroundColor = bgColor;
+  }, [apiService, bgColor]);
 
   return (
     <>
       <Navbar />
-      <Stack
-        bg={bgColor}
-        color={color}
-        height="100vh"
-        spacing={8}
-        textAlign="center"
-      >
+      <Stack color={color} textAlign="center">
         <Box mt={60} p={4}>
           <CountryInput countries={['India', 'Indiana', 'Australia']} />
         </Box>
