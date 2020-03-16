@@ -9,6 +9,8 @@ import useColorScheme from '../../components/use-color-scheme/use-color-sheme';
 import Navbar from '../../components/navbar/navbar';
 import Loader from '../../components/loader/loader';
 import Emoji from '../../components/emoji/emoji';
+import EmptyState from '../../components/empty-state/empty-state';
+import Flex from '@chakra-ui/core/dist/Flex';
 
 export default function App() {
   const apiService = useContext(APIServiceContext);
@@ -48,8 +50,15 @@ export default function App() {
             countries={countries}
           />
         </Box>
-        <Box textAlign="center">
-          {!stats && (
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+          p={5}
+          height="calc(100vh - 200px)"
+          textAlign="center"
+        >
+          {!selectedCountry && <EmptyState />}
+          {selectedCountry && !stats && (
             <Loader
               message={
                 <Text size="md">
@@ -60,7 +69,7 @@ export default function App() {
             />
           )}
           {stats && <Stats {...stats} />}
-        </Box>
+        </Flex>
       </Stack>
     </>
   );
