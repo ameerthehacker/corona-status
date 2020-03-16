@@ -34,6 +34,8 @@ export default function App() {
 
   useEffect(() => {
     if (selectedCountry) {
+      // remove the old result if exists
+      setStats(undefined);
       apiService.getStats(selectedCountry).then((stats: StatsProps) => {
         setStats(stats);
       });
