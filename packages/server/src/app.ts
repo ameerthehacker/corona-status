@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'production') {
   const clientDomain = process.env.CLIENT_DOMAIN;
 
   if (clientDomain) {
-    whitelist.push(clientDomain);
+    whitelist.push(...clientDomain.split(','));
   }
 
   console.log('express server is running in production mode 🔥');
