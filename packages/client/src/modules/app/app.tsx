@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import queryString from 'query-string';
-import APIServiceContext from '../../contexts/api';
-import Stats, { StatsProps } from '../../components/stats/stats';
-import CountryInput from '../../components/country-input/country-input';
 import Box from '@chakra-ui/core/dist/Box';
 import Text from '@chakra-ui/core/dist/Text';
 import Stack from '@chakra-ui/core/dist/Stack';
+import Flex from '@chakra-ui/core/dist/Flex';
+import useToast from '@chakra-ui/core/dist/Toast';
+import APIServiceContext from '../../contexts/api';
+import Stats, { StatsProps } from '../../components/stats/stats';
+import CountryInput from '../../components/country-input/country-input';
 import useColorScheme from '../../components/use-color-scheme/use-color-sheme';
 import Navbar from '../../components/navbar/navbar';
 import Loader from '../../components/loader/loader';
 import Emoji from '../../components/emoji/emoji';
 import EmptyState from '../../components/empty-state/empty-state';
-import Flex from '@chakra-ui/core/dist/Flex';
 import HistoryServiceContext from '../../contexts/history';
 
 function getCountryFromQueryParams(): string | undefined {
@@ -35,6 +36,7 @@ export default function App() {
   const [countries, setCountries] = useState<string[]>([]);
   const { bgColor, color } = useColorScheme();
   const [selectedCountry, setSelectedCountry] = useState<string>();
+  const toast = useToast();
 
   if (apiService === undefined) {
     throw new Error('`APIServiceContext is not provided in App`');
@@ -52,32 +54,58 @@ export default function App() {
   }
 
   useEffect(() => {
-    apiService.getCountries().then((countries: string[]) => {
-      setCountries(countries);
+    apiService
+      .getCountries()
+      .then((countries: string[]) => {
+        setCountries(countries);
 
-      const lastSearch = historyService.getLastSearch();
-
-      // set current selected country if it exists in the history and available in the list
-      if (lastSearch && countries.find((country) => country === lastSearch)) {
-        setSelectedCountry(lastSearch);
-      }
-    });
+        // set current selected country if it exists in the history and available in the list
+        if (initialCountry) {
+          if (countries.find((country) => country === initialCountry)) {
+            setSelectedCountry(initialCountry);
+          } else {
+            toast({
+              title: 'Error',
+              status: 'error',
+              description: `Sorry! no data available for country '${initialCountry}'`
+            });
+          }
+        }
+      })
+      .catch(() => {
+        toast({
+          status: 'error',
+          duration: 3000,
+          title: 'Error',
+          description: 'Unable to fetch countries, please try again later!'
+        });
+      });
 
     // update the body bgColor based on current color mode
     document.body.style.backgroundColor = bgColor;
-  }, [apiService, historyService, bgColor]);
+  }, [apiService, historyService, bgColor, initialCountry, toast]);
 
   useEffect(() => {
     if (selectedCountry) {
       // remove the old result if exists
       setStats(undefined);
-      apiService.getStats(selectedCountry).then((stats: StatsProps) => {
-        setStats(stats);
-        // set the last successful search
-        historyService.setLastSeatch(selectedCountry);
-      });
+      apiService
+        .getStats(selectedCountry)
+        .then((stats: StatsProps) => {
+          setStats(stats);
+          // set the last successful search
+          historyService.setLastSeatch(selectedCountry);
+        })
+        .catch(() => {
+          toast({
+            status: 'error',
+            duration: 3000,
+            title: 'Error',
+            description: `Unable to fetch stats for '${selectedCountry}', please try again later!`
+          });
+        });
     }
-  }, [selectedCountry, apiService, historyService]);
+  }, [selectedCountry, apiService, historyService, toast]);
 
   return (
     <>
