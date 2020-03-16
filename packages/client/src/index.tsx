@@ -6,6 +6,7 @@ import APIServiceContext from './contexts/api';
 import { APIService } from './services/api/api';
 import ThemeProvider from '@chakra-ui/core/dist/ThemeProvider';
 import CSSReset from '@chakra-ui/core/dist/CSSReset';
+import ColorModeProvider from '@chakra-ui/core/dist/ColorModeProvider';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -19,7 +20,9 @@ const el = (
   <APIServiceContext.Provider value={httpService}>
     <ThemeProvider>
       <CSSReset />
-      <App />
+      <ColorModeProvider>
+        <App />
+      </ColorModeProvider>
     </ThemeProvider>
   </APIServiceContext.Provider>
 );

@@ -15,19 +15,19 @@ export default function Stats(stats: StatsProps) {
   return (
     <Stack spacing={2}>
       <Text fontSize="2xl">
-        <Emoji emoji={'🔥'} ariaLabel={'fire'} /> New Cases: {stats.newCases}
+        <Emoji emoji={'🔥'} ariaLabel={'fire'} /> {stats.newCases} new cases
+        today
       </Text>
       <Text fontSize="2xl">
-        <Emoji emoji={'🤒'} ariaLabel={'sick'} /> Active Cases:{' '}
-        {stats.totalCases}
+        <Emoji emoji={'🤒'} ariaLabel={'sick'} /> {stats.totalCases} active
+        cases
       </Text>
       <Text fontSize="2xl">
-        <Emoji emoji={'😢'} ariaLabel={'cry'} /> Total Deaths:{' '}
-        {stats.totalDeaths}
+        <Emoji emoji={'😢'} ariaLabel={'cry'} /> {stats.totalDeaths} deaths
       </Text>
       <Text fontSize="2xl">
-        <Emoji emoji={'💃'} ariaLabel={'dancer'} /> Total Recovered:{' '}
-        {stats.totalRecovered}
+        <Emoji emoji={'💃'} ariaLabel={'dancer'} /> {stats.totalRecovered}{' '}
+        recovered
       </Text>
     </Stack>
   );
