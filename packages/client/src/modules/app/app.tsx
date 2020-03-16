@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import queryString from 'query-string';
 import APIServiceContext from '../../contexts/api';
 import Stats, { StatsProps } from '../../components/stats/stats';
 import CountryInput from '../../components/country-input/country-input';
@@ -12,6 +13,20 @@ import Emoji from '../../components/emoji/emoji';
 import EmptyState from '../../components/empty-state/empty-state';
 import Flex from '@chakra-ui/core/dist/Flex';
 import HistoryServiceContext from '../../contexts/history';
+
+function getCountryFromQueryParams(): string | undefined {
+  const country = queryString.parse(window.location.search).country;
+
+  if (country && !Array.isArray(country)) {
+    return country;
+  } else {
+    return undefined;
+  }
+}
+
+function setCountryInQueryParam(country: string) {
+  window.history.replaceState({}, '', `/?country=${country}`);
+}
 
 export default function App() {
   const apiService = useContext(APIServiceContext);
@@ -27,6 +42,13 @@ export default function App() {
 
   if (historyService === undefined) {
     throw new Error('`HistoryServiceContext is not provided in App`');
+  }
+
+  const initialCountry =
+    getCountryFromQueryParams() || historyService.getLastSearch();
+
+  if (initialCountry) {
+    setCountryInQueryParam(initialCountry);
   }
 
   useEffect(() => {
@@ -63,8 +85,11 @@ export default function App() {
       <Stack color={color} textAlign="center">
         <Box mt={60} p={4}>
           <CountryInput
-            initialCountry={historyService.getLastSearch()}
-            onSelected={(country) => setSelectedCountry(country)}
+            initialCountry={initialCountry}
+            onSelected={(country) => {
+              setSelectedCountry(country);
+              setCountryInQueryParam(country);
+            }}
             countries={countries}
           />
         </Box>
