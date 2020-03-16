@@ -24,4 +24,12 @@ export class APIService {
 
     return response as StatsProps;
   }
+
+  async getCountries(): Promise<string[]> {
+    const response = await fetch(this.getUrl(`countries`)).then((res) =>
+      res.json()
+    );
+
+    return response.countries as string[];
+  }
 }

@@ -13,27 +13,40 @@ import Emoji from '../../components/emoji/emoji';
 export default function App() {
   const apiService = useContext(APIServiceContext);
   const [stats, setStats] = useState<StatsProps>();
+  const [countries, setCountries] = useState<string[]>([]);
   const { bgColor, color } = useColorScheme();
+  const [selectedCountry, setSelectedCountry] = useState<string>();
 
   if (apiService === undefined) {
     throw new Error('`APIServiceContext is not provided in App`');
   }
 
   useEffect(() => {
-    apiService.getStats('India').then((stats: StatsProps) => {
-      setStats(stats);
+    apiService.getCountries().then((countries: string[]) => {
+      setCountries(countries);
     });
 
     // update the body bgColor based on current color mode
     document.body.style.backgroundColor = bgColor;
   }, [apiService, bgColor]);
 
+  useEffect(() => {
+    if (selectedCountry) {
+      apiService.getStats(selectedCountry).then((stats: StatsProps) => {
+        setStats(stats);
+      });
+    }
+  }, [selectedCountry]);
+
   return (
     <>
       <Navbar />
       <Stack color={color} textAlign="center">
         <Box mt={60} p={4}>
-          <CountryInput countries={['India', 'Indiana', 'Australia']} />
+          <CountryInput
+            onSelected={(country) => setSelectedCountry(country)}
+            countries={countries}
+          />
         </Box>
         <Box textAlign="center">
           {!stats && (

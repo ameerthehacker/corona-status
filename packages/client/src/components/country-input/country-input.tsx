@@ -1,5 +1,8 @@
-import React, { useState, ReactNode } from 'react';
-import AutoSuggest, { RenderSuggestionParams } from 'react-autosuggest';
+import React, { useState, ReactNode, FormEvent } from 'react';
+import AutoSuggest, {
+  RenderSuggestionParams,
+  SuggestionSelectedEventData
+} from 'react-autosuggest';
 import Input from '@chakra-ui/core/dist/Input';
 import Box from '@chakra-ui/core/dist/Box';
 import Flex from '@chakra-ui/core/dist/Flex';
@@ -8,9 +11,13 @@ import './country-input.css';
 
 export interface CountryInputProps {
   countries: string[];
+  onSelected: (country: string) => void;
 }
 
-export default function CountryInput({ countries }: CountryInputProps) {
+export default function CountryInput({
+  countries,
+  onSelected
+}: CountryInputProps) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const { bgColor, color } = useColorScheme();
@@ -55,9 +62,9 @@ export default function CountryInput({ countries }: CountryInputProps) {
     return (
       <Box
         color={isHighlighted ? bgColor : color}
-        borderWidth={1}
+        borderWidth={0.25}
         bg={isHighlighted ? color : bgColor}
-        py={2}
+        py={3}
         textAlign="center"
       >
         {suggestion}
@@ -99,6 +106,12 @@ export default function CountryInput({ countries }: CountryInputProps) {
       }}
       highlightFirstSuggestion={true}
       renderInputComponent={renderInput}
+      onSuggestionSelected={(
+        evt: FormEvent,
+        data: SuggestionSelectedEventData<string>
+      ) => {
+        onSelected(data.suggestionValue);
+      }}
     />
   );
 }
