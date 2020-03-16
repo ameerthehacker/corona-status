@@ -28,7 +28,6 @@
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.19.0",
     "husky": "^4.2.3",
-    "lerna": "^3.20.2",
     "lint-staged": "^10.0.8",
     "prettier": "^1.19.1",
     "typescript": "^3.8.3"
@@ -47,6 +46,7 @@
     }
   },
   "dependencies": {
+    "lerna": "^3.20.2",
     "morgan": "^1.9.1"
   }
 }
