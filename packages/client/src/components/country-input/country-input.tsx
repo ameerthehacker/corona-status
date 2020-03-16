@@ -15,15 +15,17 @@ import './country-input.css';
 
 export interface CountryInputProps {
   countries: string[];
+  initialCountry: string | null;
   onSelected: (country: string) => void;
 }
 
 export default function CountryInput({
   countries,
-  onSelected
+  onSelected,
+  initialCountry
 }: CountryInputProps) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>(initialCountry || '');
   const { bgColor, color } = useColorScheme();
   // Teach Autosuggest how to calculate suggestions for any given input value.
   const getSuggestions = (value: string) => {
