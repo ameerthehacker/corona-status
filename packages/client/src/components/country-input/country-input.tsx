@@ -4,8 +4,12 @@ import AutoSuggest, {
   SuggestionSelectedEventData
 } from 'react-autosuggest';
 import Input from '@chakra-ui/core/dist/Input';
+import InputGroup from '@chakra-ui/core/dist/InputGroup';
+import { InputRightElement } from '@chakra-ui/core/dist/InputElement';
 import Box from '@chakra-ui/core/dist/Box';
 import Flex from '@chakra-ui/core/dist/Flex';
+import Icon from '@chakra-ui/core/dist/Icon';
+import Button from '@chakra-ui/core/dist/Button';
 import useColorScheme from '../use-color-scheme/use-color-sheme';
 import './country-input.css';
 
@@ -35,7 +39,16 @@ export default function CountryInput({
 
   const renderInput = (inputProps: any) => {
     return (
-      <Input borderRadius={0} {...inputProps} variant="outline" size="lg" />
+      <InputGroup>
+        <Input borderRadius={0} {...inputProps} variant="outline" size="lg" />
+        {inputValue.length > 0 && (
+          <InputRightElement>
+            <Button onClick={() => setInputValue('')} variant="ghost">
+              <Icon name="close" />
+            </Button>
+          </InputRightElement>
+        )}
+      </InputGroup>
     );
   };
 
