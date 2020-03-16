@@ -24,7 +24,7 @@ export class CovidAPIService {
   ) {}
 
   private get isCacheValid(): boolean {
-    // cache is valid only for five minutes
+    // cache is valid only for one hour
     return Date.now() - this.lastUpdated <= this.cacheValidityTime;
   }
 
