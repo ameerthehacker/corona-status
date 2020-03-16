@@ -16,7 +16,7 @@ export default function Footer() {
       bg={bgColor}
       color={color}
       pos="fixed"
-      zIndex={9999}
+      zIndex={1}
       bottom={0}
       width="100%"
       height="30px"
