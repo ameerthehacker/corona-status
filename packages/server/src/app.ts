@@ -20,6 +20,12 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 if (process.env.NODE_ENV === 'production') {
+  const clientDomain = process.env.CLIENT_DOMAIN;
+
+  if (clientDomain) {
+    whitelist.push(clientDomain);
+  }
+
   console.log('express server is running in production mode 🔥');
 }
 
