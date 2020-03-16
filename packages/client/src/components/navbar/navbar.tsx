@@ -19,7 +19,7 @@ export default function Navbar() {
       direction="row"
       alignItems="center"
       justifyContent="flex-end"
-      pos="absolute"
+      pos="fixed"
       top={0}
       height={60}
       width="100%"

@@ -125,7 +125,6 @@ export default function App() {
           alignItems="center"
           justifyContent="center"
           p={5}
-          height="calc(100vh - 200px)"
           textAlign="center"
         >
           {!selectedCountry && <EmptyState />}
