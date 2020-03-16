@@ -1,0 +1,9 @@
+.suggestions-contaier > ul {
+  list-style-type: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* TODO: fix this workaround */
+  padding-right: 15px;
+  padding-left: 15px;
+}

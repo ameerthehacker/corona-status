@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-import AutoSuggest from 'react-autosuggest';
+import React, { useState, ReactNode } from 'react';
+import AutoSuggest, { RenderSuggestionParams } from 'react-autosuggest';
 import Input from '@chakra-ui/core/dist/Input';
 import Box from '@chakra-ui/core/dist/Box';
+import Flex from '@chakra-ui/core/dist/Flex';
+import useColorScheme from '../use-color-scheme/use-color-sheme';
+import './country-input.css';
 
 export interface CountryInputProps {
   countries: string[];
@@ -10,6 +13,7 @@ export interface CountryInputProps {
 export default function CountryInput({ countries }: CountryInputProps) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
+  const { bgColor, color } = useColorScheme();
   // Teach Autosuggest how to calculate suggestions for any given input value.
   const getSuggestions = (value: string) => {
     const inputValue = value.trim().toLowerCase();
@@ -44,8 +48,41 @@ export default function CountryInput({ countries }: CountryInputProps) {
   // input value for every given suggestion.
   const getSuggestionValue = (suggestion: string) => suggestion;
 
-  // Use your imagination to render suggestions.
-  const renderSuggestion = (suggestion: string) => <Box>{suggestion}</Box>;
+  const renderSuggestion = (
+    suggestion: string,
+    { isHighlighted }: RenderSuggestionParams
+  ) => {
+    return (
+      <Box
+        color={isHighlighted ? bgColor : color}
+        borderWidth={1}
+        bg={isHighlighted ? color : bgColor}
+        py={2}
+        textAlign="center"
+      >
+        {suggestion}
+      </Box>
+    );
+  };
+
+  const renderSugesstionContainer = ({
+    containerProps,
+    children
+  }: {
+    children: ReactNode;
+    containerProps: any;
+  }) => {
+    return (
+      <Flex
+        {...containerProps}
+        bg={bgColor}
+        justifyContent="center"
+        className="suggestions-contaier"
+      >
+        {children}
+      </Flex>
+    );
+  };
 
   return (
     <AutoSuggest
@@ -54,11 +91,13 @@ export default function CountryInput({ countries }: CountryInputProps) {
       renderSuggestion={renderSuggestion}
       onSuggestionsFetchRequested={onSuggestionsFetchRequested}
       onSuggestionsClearRequested={onSuggestionsClearRequested}
+      renderSuggestionsContainer={renderSugesstionContainer}
       inputProps={{
         value: inputValue,
         onChange: (evt, { newValue }) => setInputValue(newValue),
         placeholder: 'Enter your country'
       }}
+      highlightFirstSuggestion={true}
       renderInputComponent={renderInput}
     />
   );
