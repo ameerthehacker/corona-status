@@ -5,7 +5,7 @@ import { HttpService } from './services/http/http';
 import cors, { CorsOptions } from 'cors';
 
 const app = express();
-const PORT = process.env.NODE_PORT || 3001;
+const PORT = process.env.PORT || 3001;
 // we will be fetching the data based on awesome pomber json
 // https://pomber.github.io/covid19/timeseries.json
 const httpService = new HttpService('https://pomber.github.io/covid19');
