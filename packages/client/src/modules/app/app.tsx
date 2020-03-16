@@ -14,6 +14,7 @@ import Loader from '../../components/loader/loader';
 import Emoji from '../../components/emoji/emoji';
 import EmptyState from '../../components/empty-state/empty-state';
 import HistoryServiceContext from '../../contexts/history';
+import Footer from '../../components/footer/footer';
 
 function getCountryFromQueryParams(): string | undefined {
   const country = queryString.parse(window.location.search).country;
@@ -110,7 +111,7 @@ export default function App() {
   return (
     <>
       <Navbar />
-      <Stack color={color} textAlign="center">
+      <Stack color={color} textAlign="center" pb="20px">
         <Box mt={60} p={4}>
           <CountryInput
             initialCountry={initialCountry}
@@ -141,6 +142,7 @@ export default function App() {
           {stats && <Stats {...stats} />}
         </Flex>
       </Stack>
+      <Footer />
     </>
   );
 }
