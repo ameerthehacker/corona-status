@@ -44,7 +44,7 @@ function Root() {
               >
                 <Stack direction="row" alignItems="center">
                   <Icon name="info" />
-                  <Text>Woah! new updates are available</Text>
+                  <Text fontSize="sm">New updates are available</Text>
                   <Link
                     fontWeight="bold"
                     onClick={() => window.location.reload()}
