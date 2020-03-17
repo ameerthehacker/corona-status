@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import useToast from '@chakra-ui/core/dist/Toast';
 import Box from '@chakra-ui/core/dist/Box';
 import Text from '@chakra-ui/core/dist/Text';
-import Link from '@chakra-ui/core/dist/Link';
+import Button from '@chakra-ui/core/dist/Button';
 import * as serviceWorker from './serviceWorker';
 import App from './modules/app/app';
 import APIServiceContext from './contexts/api';
@@ -45,12 +45,14 @@ function Root() {
                 <Stack direction="row" alignItems="center">
                   <Icon name="info" />
                   <Text fontSize="sm">New updates are available</Text>
-                  <Link
+                  <Button
+                    variantColor="blue.500"
+                    variant="ghost"
                     fontWeight="bold"
                     onClick={() => window.location.reload()}
                   >
                     REFRESH
-                  </Link>
+                  </Button>
                 </Stack>
               </Box>
             );
