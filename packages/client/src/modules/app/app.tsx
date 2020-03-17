@@ -135,7 +135,7 @@ export default function App() {
           {selectedCountry && !stats && (
             <Loader
               message={
-                <Text size="md">
+                <Text maxWidth="160px" size="sm">
                   <Emoji emoji="🚧" ariaLabel="barigade" />
                   Crunching data <Emoji emoji="🚧" ariaLabel="barigade" />
                 </Text>
