@@ -25,25 +25,25 @@ export default function Stats(stats: StatsProps) {
 
   return (
     <Stack spacing={2}>
-      <Box fontSize="2xl">
+      <Box borderBottomWidth="1px" p={2} fontSize="2xl">
         <Text color="red.500" fontSize="5xl">
           {stats.newCases}
         </Text>
         <Emoji emoji={'🔥'} ariaLabel={'fire'} /> new cases today
       </Box>
-      <Box fontSize="2xl">
+      <Box borderBottomWidth="1px" p={2} fontSize="2xl">
         <Text color="red.500" fontSize="5xl">
           {stats.totalCases}
         </Text>
         <Emoji emoji={'🤒'} ariaLabel={'sick'} /> active cases
       </Box>
-      <Box fontSize="2xl">
+      <Box borderBottomWidth="1px" p={2} fontSize="2xl">
         <Text color="red.500" fontSize="5xl">
           {stats.totalDeaths}
         </Text>
         <Emoji emoji={'😢'} ariaLabel={'cry'} /> deaths
       </Box>
-      <Box fontSize="2xl">
+      <Box borderBottomWidth="1px" p={2} fontSize="2xl">
         <Text color="green.500" fontSize="5xl">
           {stats.totalRecovered}
         </Text>
