@@ -68,7 +68,7 @@ export default function App() {
             toast({
               title: 'Error',
               status: 'error',
-              position: 'top',
+              position: 'bottom',
               description: `Sorry! no data available for country '${initialCountry}'`
             });
           }
@@ -79,7 +79,7 @@ export default function App() {
           status: 'error',
           duration: 3000,
           title: 'Error',
-          position: 'top',
+          position: 'bottom',
           description: 'Unable to fetch countries, please try again later!'
         });
       });
@@ -104,7 +104,7 @@ export default function App() {
             status: 'error',
             duration: 3000,
             title: 'Error',
-            position: 'top',
+            position: 'bottom',
             description: `Unable to fetch stats for '${selectedCountry}', please try again later!`
           });
         });
