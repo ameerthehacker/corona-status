@@ -25,6 +25,19 @@ if (!API_URL) {
 const httpService = new APIService(API_URL);
 const historyService = new HistoryService();
 
+// init Google Analytics
+if (
+  process.env.NODE_ENV === 'production' &&
+  process.env.REACT_APP_GA_TRACKING_CODE !== undefined
+) {
+  import('react-ga').then((ReactGA) => {
+    // Checking it again since typescript failed us;
+    if (process.env.REACT_APP_GA_TRACKING_CODE !== undefined) {
+      ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_CODE);
+    }
+  });
+}
+
 function Root() {
   const toast = useToast();
 
