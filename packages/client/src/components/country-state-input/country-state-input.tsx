@@ -11,19 +11,19 @@ import Flex from '@chakra-ui/core/dist/Flex';
 import Icon from '@chakra-ui/core/dist/Icon';
 import Button from '@chakra-ui/core/dist/Button';
 import useColorScheme from '../use-color-scheme/use-color-sheme';
-import './country-input.css';
+import './country-state-input.css';
 
-export interface CountryInputProps {
+export interface CountryStateInputProps {
   countries: string[];
   initialCountry: string | null;
   onSelected: (country: string) => void;
 }
 
-export default function CountryInput({
+export default function CountryStateInput({
   countries,
   onSelected,
   initialCountry
-}: CountryInputProps) {
+}: CountryStateInputProps) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>(initialCountry || '');
   const { bgColor, color } = useColorScheme();
@@ -117,7 +117,7 @@ export default function CountryInput({
       inputProps={{
         value: inputValue,
         onChange: (evt, { newValue }) => setInputValue(newValue),
-        placeholder: 'Enter your country'
+        placeholder: 'Enter your state or country'
       }}
       highlightFirstSuggestion={true}
       renderInputComponent={renderInput}

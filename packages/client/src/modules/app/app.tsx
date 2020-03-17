@@ -7,7 +7,7 @@ import Flex from '@chakra-ui/core/dist/Flex';
 import useToast from '@chakra-ui/core/dist/Toast';
 import APIServiceContext from '../../contexts/api';
 import Stats, { StatsProps } from '../../components/stats/stats';
-import CountryInput from '../../components/country-input/country-input';
+import CountryStateInput from '../../components/country-state-input/country-state-input';
 import useColorScheme from '../../components/use-color-scheme/use-color-sheme';
 import Navbar from '../../components/navbar/navbar';
 import Loader from '../../components/loader/loader';
@@ -116,7 +116,7 @@ export default function App() {
       <Navbar />
       <Stack color={color} textAlign="center" pb="20px">
         <Box mt={60} p={4}>
-          <CountryInput
+          <CountryStateInput
             initialCountry={initialCountry}
             onSelected={(country) => {
               setSelectedCountry(country);

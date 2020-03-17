@@ -4,5 +4,5 @@
     "lib": ["dom", "dom.iterable", "esnext"]
   },
   "extends": "../../tsconfig.base.json",
-  "include": ["src"]
+  "include": ["src", "../server/src/services/state-api"]
 }

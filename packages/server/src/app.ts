@@ -3,13 +3,25 @@ import morgan from 'morgan';
 import { CovidAPIService } from './services/api/api';
 import { HttpService } from './services/http/http';
 import cors, { CorsOptions } from 'cors';
+import { IndianStateAPIService } from './services/state-api/india';
+import { StateAPIService } from './services/contracts/state-api';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 // we will be fetching the data based on awesome pomber json
 // https://pomber.github.io/covid19/timeseries.json
-const httpService = new HttpService('https://pomber.github.io/covid19');
-const covidAPIService = new CovidAPIService(httpService);
+const countryHttpService = new HttpService('https://pomber.github.io/covid19');
+const indianStateHttpService = new HttpService(
+  'https://ameerthehacker.github.io/corona-india-status'
+);
+
+// state API services
+const indianStateAPIService: StateAPIService = new IndianStateAPIService(
+  indianStateHttpService
+);
+const covidAPIService = new CovidAPIService(countryHttpService, [
+  indianStateAPIService
+]);
 
 const whitelist: string[] = [];
 

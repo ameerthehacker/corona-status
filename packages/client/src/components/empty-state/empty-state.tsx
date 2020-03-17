@@ -10,7 +10,7 @@ export default function EmptyState() {
         <Emoji emoji="👆" ariaLabel="up" />
       </Text>
       <Text fontSize="2xl" fontWeight="light">
-        search your country to view the status
+        search your state or country to view the status
       </Text>
     </Box>
   );

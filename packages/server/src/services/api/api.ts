@@ -1,5 +1,6 @@
 import { HttpService } from '../http/http';
 import { subDays, format } from 'date-fns';
+import { StateAPIService } from '../contracts/state-api';
 
 export interface CovidData {
   date: string;
@@ -20,6 +21,7 @@ export class CovidAPIService {
 
   constructor(
     private httpService: HttpService,
+    private stateAPIServices: StateAPIService[] = [],
     private endpoint = 'timeseries.json'
   ) {}
 
@@ -56,6 +58,12 @@ export class CovidAPIService {
       .get<CovidAPIResponse>(this.endpoint)
       .then((res) => res.data);
     this.lastUpdated = Date.now();
+
+    for (let stateAPIService of this.stateAPIServices) {
+      const stateAPIResponse = await stateAPIService.getDataPoints();
+
+      this.lastResponse = { ...this.lastResponse, ...stateAPIResponse };
+    }
 
     if (this.lastResponse === null || this.lastResponse === undefined) {
       throw new Error(`unable to fetch data`);
