@@ -51,7 +51,7 @@ export default function Stats(stats: StatsProps) {
       </Box>
       <Box fontSize="2xl">
         <Text fontSize="5xl">{fatalityRate}%</Text>
-        <Text fontSize="xs">{Math.ceil(fatalityRate)} in 100 might die</Text>
+        <Text fontSize="xs">{Math.floor(fatalityRate)} in 100 might die</Text>
         <Emoji emoji={'😵'} ariaLabel={'dead'} /> fatality rate
       </Box>
     </Stack>
