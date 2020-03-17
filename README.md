@@ -9,3 +9,11 @@
 | @corona-status/server | ![server-ci](https://github.com/ameerthehacker/corona-status/workflows/server-ci/badge.svg) |
 
 📱 friendly PWA to get status on corona pandemic
+
+## Sources
+
+All the data displayed in the site are gathered from these sources, note that the site might sometime show outdated data and will take some time to sync 😄
+
+[https://github.com/CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19)
+
+[https://www.mohfw.gov.in/](https://www.mohfw.gov.in/)
