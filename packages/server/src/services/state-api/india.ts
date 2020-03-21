@@ -3,6 +3,7 @@ import { CovidAPIResponse } from '../api/api';
 import { StateAPIService } from '../contracts/state-api';
 
 export interface IndianStateData {
+  newCasesToday: number;
   totalIndianCases: number;
   totalForeignCases: number;
   totalRecovered: number;
@@ -36,6 +37,16 @@ export class IndianStateAPIService implements StateAPIService {
             response.data[stateName].totalForeignCases,
           // harcoding this date as the time series data is not available
           date: '1995-1-1',
+          deaths: response.data[stateName].totalDeaths,
+          recovered: response.data[stateName].totalRecovered
+        },
+        {
+          confirmed:
+            response.data[stateName].totalIndianCases +
+            response.data[stateName].totalForeignCases +
+            (response.data[stateName].newCasesToday || 0),
+          // harcoding this date as the time series data is not available
+          date: '1995-1-2',
           deaths: response.data[stateName].totalDeaths,
           recovered: response.data[stateName].totalRecovered
         }
