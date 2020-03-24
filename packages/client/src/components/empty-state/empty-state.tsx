@@ -5,7 +5,7 @@ import Box from '@chakra-ui/core/dist/Box';
 
 export default function EmptyState() {
   return (
-    <Box>
+    <Box data-cy="empty-state">
       <Text fontSize="6xl">
         <Emoji emoji="👆" ariaLabel="up" />
       </Text>

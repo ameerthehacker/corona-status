@@ -34,7 +34,13 @@ export default function Navbar() {
         direction="row"
       >
         <Logo fill={color} height="30px" />
-        <Text ml={1} fontStyle="light" fontWeight="light" fontSize="2xl">
+        <Text
+          data-cy="brand-name"
+          ml={1}
+          fontStyle="light"
+          fontWeight="light"
+          fontSize="2xl"
+        >
           Corona Status
         </Text>
       </Stack>

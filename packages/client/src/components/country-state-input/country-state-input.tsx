@@ -42,7 +42,13 @@ export default function CountryStateInput({
   const renderInput = (inputProps: any) => {
     return (
       <InputGroup>
-        <Input borderRadius={0} {...inputProps} variant="outline" size="lg" />
+        <Input
+          data-cy="country-search-input"
+          borderRadius={0}
+          {...inputProps}
+          variant="outline"
+          size="lg"
+        />
         {inputValue.length > 0 && (
           <InputRightElement>
             <Button onClick={() => setInputValue('')} variant="ghost">
@@ -76,6 +82,7 @@ export default function CountryStateInput({
   ) => {
     return (
       <Box
+        data-cy="country-suggestion"
         color={isHighlighted ? bgColor : color}
         borderWidth={0.25}
         bg={isHighlighted ? color : bgColor}

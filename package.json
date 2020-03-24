@@ -5,6 +5,7 @@
   "scripts": {
     "start": "concurrently -k yarn:dev-client yarn:dev-server",
     "bootstrap": "lerna bootstrap",
+    "e2e": "cypress open",
     "start-server": "lerna run start --stream --scope=@corona-status/server",
     "build-client": "lerna run build --stream --scope=@corona-status/client",
     "dev-client": "lerna run start --stream --scope=@corona-status/client",
@@ -27,6 +28,7 @@
     "concurrently": "^5.1.0",
     "cypress": "^4.2.0",
     "eslint": "^6.8.0",
+    "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-react": "^7.19.0",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.8",
