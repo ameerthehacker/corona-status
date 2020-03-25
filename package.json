@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "lerna": "^3.20.2",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "react-ga": "^2.7.0"
   }
 }

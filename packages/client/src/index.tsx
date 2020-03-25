@@ -17,6 +17,14 @@ import Icon from '@chakra-ui/core/dist/Icon';
 import Stack from '@chakra-ui/core/dist/Stack';
 
 const API_URL = process.env.REACT_APP_API_URL;
+const GA_TRACKING_CODE = process.env.REACT_APP_GA_TRACKING_CODE;
+
+if (process.env.NODE_ENV === 'production' && GA_TRACKING_CODE) {
+  import('react-ga').then((ReactGA) => {
+    ReactGA.initialize(GA_TRACKING_CODE);
+    ReactGA.pageview(window.location.href);
+  });
+}
 
 if (!API_URL) {
   throw new Error('env variable `REACT_APP_API_URL` is not defined');
