@@ -45,7 +45,7 @@ export default function Stats(stats: StatsProps) {
       </Box>
       <Box borderBottomWidth="1px" p={2} fontSize="2xl">
         <Text color="green.500" fontSize="5xl">
-          {stats.totalRecovered}
+          {stats.totalRecovered === null ? 'N/A' : stats.totalRecovered}
         </Text>
         <Emoji emoji={'💃'} ariaLabel={'dancer'} /> recovered
       </Box>
