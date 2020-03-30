@@ -17,3 +17,9 @@ All the data displayed in the site are gathered from these sources, note that th
 [https://github.com/CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19)
 
 [https://www.mohfw.gov.in/](https://www.mohfw.gov.in/)
+
+Show your support by :star: the repo
+
+## License
+
+MIT © [Ameer Jhan](mailto:ameerjhanprof@gmail.com)
